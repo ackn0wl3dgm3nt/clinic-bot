@@ -1,82 +1,49 @@
 # clinic-bot
 
-## Setup (запуск и настройка проекта):
-1. Изменить config.py:
-- Postgres: host, user, password (подключение к БД)
-- BOT_TOKEN: токен телеграмм бота (получать в @BotFather)
-2. Установить PostgreSQL (16.1)
-3. Запустить migrations.py для настройки БД
-4. Запустить app.py (бот)
-5. Заполнить таблицы Specialties и Doctors (см. Заполнение таблиц)
+## Setup (запуск и настройка проекта)
+### ⚠️ Для запуска необходимо иметь Python 3.7+ и PostgreSQL 9.1+ ⚠️
+1. _Изменить .env файл:_
+- **BOT_TOKEN** (получить в @BotFather)
+- **POSTGRES_USER** (указывается при установке PostgreSQL)
+- **POSTGRES_PASSWORD** (указывается при установке PostgreSQL)
+2. _Запустить migrations.py (миграции БД)_
+3. _Запустить app.py (запуск бота)_
 
-## Структура проекта:
-- app.py - хендлеры (Dispatcher)
-- config.py - конфигурация бота (токен бота, FSM хранилище)
-- db.py - обращения к БД
-- keyboards.py - клавиатуры (ReplyMarkup)
-- states.py - стейты
-- validators.py - валидаторы (проверки) пользовательских данных
-- migrations.py - миграции БД
-- wordings.py - текста бота
+## Структура проекта
+- _app.py_ - хендлеры (Dispatcher)
+- _config.py_ - конфигурация бота (токен бота, FSM хранилище, подключение к PostgreSQL)
+- _db.py_ - запросы к БД (Repository)
+- _keyboards.py_ - клавиатуры (ReplyMarkup)
+- _states.py_ - стейты (States)
+- _validators.py_ - валидаторы (проверки) пользовательских данных
+- _migrations.py_ - миграции БД
+- _wordings.py_ - текста бота
 
-## Структура БД:
-1. Patients: (Пациенты)
-- telegram_id - Telegram ID (PRIMARY KEY)
-- fullname - ФИО
-- birthday - Дата Рождения
-- phone - Номер телефона
-- policy - Полис ОМС (16 символов)
-- passport (Серия и номер паспорта)
+## Структура БД
+1. **Patients: (Пациенты)**
+- _telegram_id_ - Telegram ID (PRIMARY KEY)
+- _fullname_ - ФИО
+- _birthday_ - Дата Рождения
+- _phone_ - Номер телефона
+- _policy_ - Полис ОМС (16 символов)
+- _passport_ (Серия и номер паспорта)
 
-2. Specialties: (Специальности)
-- id - ID Специальности (PRIMARY KEY)
-- name - Название специальности
+2. **Specialties: (Специальности)**
+- _id_ - ID Специальности (PRIMARY KEY)
+- _name_ - Название специальности
 
-3. Doctors: (Доктора)
-- id - ID Доктора (PRIMARY KEY)
-- specialist_id - ID Специальности (FOREIGN KEY)
-- fullname - ФИО
-- experience - опыт
-- birthday - Дата Рождения
-- gender - пол
-- email - электронная почта
+3. **Doctors: (Доктора)**
+- _id_ - ID Доктора (PRIMARY KEY)
+- _specialist_id_ - ID Специальности (FOREIGN KEY)
+- _fullname_ - ФИО
+- _experience_ - опыт
+- _birthday_ - Дата Рождения
+- _gender_ - пол
+- _email_ - электронная почта
 
-4. Records: (Записи)
-- id - ID Записи (PRIMARY KEY)
-- telegram_id - Telegram ID (FOREIGN KEY)
-- doctor_id - ID Доктора (FOREIGN KEY)
-- date - Дата
-- time - Время
-
-## Заполнение таблиц:
-### Подключишься к БД через pgAdmin, выполните следующие SQL-запросы:
-1. Таблица Специальности
-
-INSERT INTO Specialties (name)
-VALUES ('Хирург'),
-('Терапевт'),
-('Стоматолог'),
-('Уролог'),
-('Гинеколог'),
-('Нарколог'),
-('Психиатр'),                  
-('Дерматолог'),                                                                                          
-('Отоларинголог'),                      
-('Эндокринолог');
-2. Таблица Доктора
-
-INSERT INTO Doctors (specialist_id, fullname, experience, birthday, gender, email)
-VALUES 
-    (1, 'Смелов Владимир Владиславович', 15, '1983-09-23', 'Мужской', 'smelov.v@mail.ru'),
-    (2, 'Акунович Станислав Иванович', 20, '1991-03-17', 'Мужской', 'stan@mail.ru'),
-    (3, 'Колесников Виталий Леонидович', 3, '1992-03-28', 'Мужской', 'Kolesnikov@mail.ru'),
-    (4, 'Бракович Андрей Игоревич', 12, '1987-10-17', 'Мужской', 'brakovich@gmail.ru'),
-    (2, 'Дятко Александр Аркадьевич', 10, '1993-02-24', 'Мужской', 'alex.dyatko@mail.ru'),
-    (5, 'Урбанович Павел Павлович', 8, '1994-04-16', 'Мужской', 'urban.pavel@mail.ru'),
-    (6, 'Гурин Николай Иванович', 9, '1996-06-18', 'Мужской', 'gyrin@mail.ru'),
-    (7, 'Жиляк Надежда Александровна', 16, '1982-04-25', 'Женщина', 'zhilyak@gmail.ru'),                  
-    (8, 'Мороз Елена Станиславовна', 7, '1996-08-14', 'Женщина', 'elena.morozova@mail.ru'),                                                                                          
-    (9, 'Барташевич Святослав Александрович', 25, '1997-11-27', 'Мужской', 'bartash@gmail.ru'),
-    (3, 'Арсентьев Виталий Арсентьевич', 19, '1982-04-23', 'Мужской', 'ars.vitali@mail.ru'),                      
-    (10, 'Барановский Станислав Иванович', 2, '1991-07-19', 'Мужской', 'baran@mail.ru'),
-    (1, 'Насковец Михаил Трофимович', 17, '1984-02-28', 'Мужской', 'mih.trofimovich@gmail.ru');
+4. **Records: (Записи)**
+- _id_ - ID Записи (PRIMARY KEY)
+- _telegram_id_ - Telegram ID (FOREIGN KEY)
+- _doctor_id_ - ID Доктора (FOREIGN KEY)
+- _date_ - Дата
+- _time_ - Время

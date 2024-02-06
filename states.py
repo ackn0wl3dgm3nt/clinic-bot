@@ -9,10 +9,6 @@ class MainMenu(StatesGroup):
     menu = State()
 
 
-# class Info(StatesGroup):
-#     text = State()
-
-
 class Register(StatesGroup):
     fullname = State()
     birthday = State()

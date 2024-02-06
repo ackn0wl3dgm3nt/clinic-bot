@@ -1,4 +1,5 @@
 import datetime
+
 from db import *
 
 
@@ -11,6 +12,9 @@ class RegisterValidator:
     def check_birthday(birthday: str) -> bool:
         try:
             d = datetime.datetime.strptime(birthday, "%d.%m.%Y")
+            current_date = datetime.datetime.now().date()
+            if d.date() > current_date:
+                return False
             return True
         except ValueError:
             return False
@@ -41,21 +45,26 @@ class RegisterValidator:
 class RecordValidator:
     @staticmethod
     def check_is_specialist(name) -> bool:
-        specialties = Specialists.get_all()
+        specialties = SpecialistsRepository.get_all()
         return name in specialties
 
     @staticmethod
     def check_is_doctor(fullname: str) -> bool:
-        doctors = Doctor.get_all_fullnames()
+        doctors = DoctorRepository.get_all_fullnames()
         return fullname in doctors
 
     @staticmethod
     def check_date(input_date: str) -> bool:
         date = datetime.datetime.strptime(input_date, "%d.%m.%Y")
-        if date.weekday() in [5, 6]:  # Воскресенье
+        current_date = datetime.datetime.now().date()
+
+        try:
+            if date.weekday() in [5, 6] or date.date() < current_date:
+                return False
+            else:
+                return True
+        except ValueError:
             return False
-        else:
-            return True
 
     @staticmethod
     def check_time(input_time) -> bool:
