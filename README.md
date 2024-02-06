@@ -7,8 +7,9 @@
 - **BOT_TOKEN** (получить в @BotFather)
 - **POSTGRES_USER** (указывается при установке PostgreSQL)
 - **POSTGRES_PASSWORD** (указывается при установке PostgreSQL)
-2. _Запустить migrations.py (миграции БД)_
-3. _Запустить app.py (запуск бота)_
+2. _Выполнить `python migrations.py` (миграции БД)_
+3. _Выполнить `pip install -r requirements.txt` (установка зависимостей)_
+3. _Запуск бота: `python app.py`_
 
 ## Структура проекта
 - _app.py_ - хендлеры (Dispatcher)
