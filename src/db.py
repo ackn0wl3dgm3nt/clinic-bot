@@ -1,6 +1,8 @@
-from config import Postgres
 from functools import wraps
+
 from psycopg2.extensions import cursor
+
+from config import Postgres
 
 DB_CONN = Postgres.get_conn()
 

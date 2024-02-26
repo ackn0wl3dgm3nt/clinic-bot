@@ -1,11 +1,12 @@
 import os
 
 import psycopg2
-from psycopg2.extensions import connection
 from aiogram.fsm.storage.memory import MemoryStorage
-from dotenv import load_dotenv
+from psycopg2.extensions import connection
 
-load_dotenv()
+from .load_env import load_env
+
+load_env()
 
 class Postgres:
     host = os.getenv("POSTGRES_HOST")

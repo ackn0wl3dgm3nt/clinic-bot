@@ -5,21 +5,23 @@
 ### ⚠️ Для запуска необходимо иметь Python 3.7+ и PostgreSQL 9.1+ ⚠️
 1. _Изменить .env файл:_
 - **BOT_TOKEN** (получить в @BotFather)
-- **POSTGRES_USER** (указывается при установке PostgreSQL)
-- **POSTGRES_PASSWORD** (указывается при установке PostgreSQL)
-2. _Выполнить `python migrations.py` (миграции БД)_
+- **POSTGRES_USER** (указывается при установке PostgreSQL, по умолчанию = _postgres_)
+- **POSTGRES_PASSWORD** (указывается при установке PostgreSQL, по умолчанию = _postgres_)
+2. _Выполнить `python "src/migrations.py"` (миграции БД)_
 3. _Выполнить `pip install -r requirements.txt` (установка зависимостей)_
-3. _Запуск бота: `python app.py`_
+3. _Запуск бота: `python "src/app.py"`_
 
 ## Структура проекта
-- _app.py_ - хендлеры (Dispatcher)
-- _config.py_ - конфигурация бота (токен бота, FSM хранилище, подключение к PostgreSQL)
-- _db.py_ - запросы к БД (Repository)
-- _keyboards.py_ - клавиатуры (ReplyMarkup)
-- _states.py_ - стейты (States)
-- _validators.py_ - валидаторы (проверки) пользовательских данных
-- _migrations.py_ - миграции БД
-- _wordings.py_ - текста бота
+- _src/_
+  - _app.py_ - хендлеры (Dispatcher)
+  - _config.py_ - конфигурация бота (токен бота, FSM хранилище, подключение к PostgreSQL)
+  - _db.py_ - запросы к БД (Repository)
+  - _keyboards.py_ - клавиатуры (ReplyMarkup)
+  - _states.py_ - стейты (States)
+  - _validators.py_ - валидаторы (проверки) пользовательских данных
+  - _migrations.py_ - миграции БД
+  - _wordings.py_ - текста бота
+- _.env_ - переменные окружения
 
 ## Структура БД
 1. **Patients: (Пациенты)**
